@@ -1,0 +1,26 @@
+name: Build Preview Deployment
+on:
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch:
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    name: Build Preview
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Deploy preview to Cloudflare Pages
+        uses: AdrianGonz97/refined-cf-pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          projectName: hub-preview
+          deploymentName: Branch Preview
+          directory: dist
