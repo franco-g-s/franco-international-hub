@@ -58,3 +58,5 @@ npm run build  # production build → dist/
 
 - **Email:** franco@goxcoworld.com
 - **GitHub:** [@franco-g-s](https://github.com/franco-g-s)
+
+<!-- preview smoke test 2 -->
